@@ -6,13 +6,9 @@
 #define DJIKSTRA_UTILS_H
 
 #include <vector>
-
-using std::vector;
-
+using namespace std;
 
 vector<int> indexedVector(int n);
-
-void listVector(vector<int> arr);
 
 vector<int> fisherYatesShuffle(vector<int> n);
 vector<std::pair<int, int>> fisherYatesShuffle(vector<std::pair<int, int>> n);

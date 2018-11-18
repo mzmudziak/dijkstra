@@ -19,14 +19,12 @@ public:
 
     void print();
 
-    int shortest(const int *dystans, const bool *znalezione, int n);
+    int shortest(const int *distance, const bool *visited);
 
-    void printPath(int parent[], int i);
+    void printShortestPath(int *parent, int i);
 
-    void printSolution(int dist[], int parent[], int destination);
+    void print(int *dist, int *parent, int destination);
 
     void dijkstra(int source, int destination);
 };
-
-
 #endif

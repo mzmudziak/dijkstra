@@ -42,12 +42,12 @@ Graph::Graph(int vertices, int edges) {
     }
 }
 
-int Graph::shortest(const int *dystans, const bool *znalezione, int n) {
+int Graph::shortest(const int *distance, const bool *visited) {
     int min = INT_MAX;
     int min_index = -1;
     for (int i = 0; i < n; i++) {
-        if (!znalezione[i] && dystans[i] <= min) {
-            min = dystans[i];
+        if (!visited[i] && distance[i] <= min) {
+            min = distance[i];
             min_index = i;
         }
     }
@@ -55,7 +55,7 @@ int Graph::shortest(const int *dystans, const bool *znalezione, int n) {
 }
 
 void Graph::print() {
-    cout << "Graf o " << n << " wierzcholkach" << endl << '\t';
+    cout << "Graph with " << n << " vertices" << endl << '\t';
     for (int i = 0; i < this->n; ++i) {
         cout << i << "\t";
     }
@@ -69,24 +69,24 @@ void Graph::print() {
     }
 }
 
-void Graph::printPath(int parent[], int i) {
+void Graph::printShortestPath(int *parent, int i) {
     if (parent[i] == -1) {
         return;
     }
-    printPath(parent, parent[i]);
+    printShortestPath(parent, parent[i]);
     cout << i << " ";
 }
 
-void Graph::printSolution(int dist[], int parent[], int destination) {
+void Graph::print(int *dist, int *parent, int destination) {
     int src = 0;
-    cout << "\nTrasa\t\tWaga\tSciezka";
+    cout << "\nVertices\t\tWeight\tPath";
     if (destination != -1) {
         cout << "\n" << src << " -> " << destination << "\t\t" << dist[destination] << "\t\t\t" << src << " ";
-        printPath(parent, destination);
+        printShortestPath(parent, destination);
     } else {
         for (int i = 0; i < n; i++) {
             cout << "\n" << src << " -> " << i << "\t\t" << dist[i] << "\t\t\t" << src << " ";
-            printPath(parent, i);
+            printShortestPath(parent, i);
         }
     }
 }
@@ -102,7 +102,7 @@ void Graph::dijkstra(int source, int destination) {
     parent[source] = -1;
     distance[source] = 0;
     for (int j = 0; j < n - 1; j++) {
-        int u = shortest(distance, visited, n);
+        int u = shortest(distance, visited);
         visited[u] = true;
         for (int v = 0; v < n; v++) {
             if (!visited[v] && this->matrix[u][v] && distance[u] != INT_MAX &&
@@ -115,7 +115,7 @@ void Graph::dijkstra(int source, int destination) {
             break;
         }
     }
-    printSolution(distance, parent, destination);
+    //print(distance, parent, destination);
 }
 
 
